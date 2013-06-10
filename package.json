@@ -4,7 +4,7 @@
   "description": "Parses selection strings",
   "main": "range-selection-parser.js",
   "scripts": {
-    "test": "jasmine-node"
+    "test": "jasmine-node test"
   },
   "repository": "https://github.com/Espesen/range-selection-parser",
   "keywords": [
