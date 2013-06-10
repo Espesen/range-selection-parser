@@ -12,6 +12,8 @@ describe('Method parseSelectionString', function () {
             '4 -6-'
           ]
         },
+        { result: [3, 6, 7, 8, 9],
+          strings: [ '3, 6-9' ]},
         { result: [],
           strings: [
             'foo',
@@ -44,6 +46,9 @@ describe('Method parseSelectionString', function () {
           expect(parser.parseSelectionString(str)).toEqual(test.result);
         });
       });
+
+      expect(parser.parseSelectionString(' 0 ,  5- 9 13')).toEqual([0, 5, 6, 7, 8, 9, 13]);
+
 
     });
     it('and if called with an array as second arguments, return array of selected items', function () {
@@ -88,6 +93,12 @@ describe('Method parseSelectionString', function () {
           expect(parser.selectFromArray(sampleArray, str)).toEqual(test.result);
         });
       });
+
+      expect(parser.selectFromArray(['a', 'b', 'c', 'd', 'e'], '1-3, 5'))
+        .toEqual(['a', 'b', 'c', 'e']);
+      expect(parser.selectFromArray(['aa', 'bb', 'cc', 'dd'], '2-'))
+        .toEqual(['bb', 'cc', 'dd']);
+
     });
 
   });
