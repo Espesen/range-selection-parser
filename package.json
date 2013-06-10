@@ -1,0 +1,31 @@
+{
+  "name": "range-selection-parser",
+  "version": "0.0.0",
+  "description": "Parses range selection strings",
+  "main": "range-selection-parser.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": "",
+  "keywords": [
+    "range",
+    "selection",
+    "string",
+    "parser",
+    "comma-separated",
+    "list"
+  ],
+  "author": "Esa Toivola",
+  "license": "BSD",
+  "dependencies": {
+    "underscore": "~1.4.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.10.0",
+    "grunt-contrib-jasmine-node": "~0.1.1",
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-jshint": "~0.6.0",
+    "jasmine-node": "~1.8.0"
+  }
+}

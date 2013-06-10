@@ -1,7 +1,63 @@
-/**
- * Created with JetBrains WebStorm.
- * User: Toivola
- * Date: 7.6.2013
- * Time: 22:16
- * To change this template use File | Settings | File Templates.
- */
+var _ = require('underscore');
+
+function parse(str, array) {
+  var selection = []
+    , rangeRegExp = /(\d+)\s*-\s*(\d+)/g
+    , openRangeRegExp = /(\d+)\s*-$/
+    , singleItemRegExp = /(\d+)/g
+    , rangeStart
+    , rangeEnd
+    , singleItem
+    , pickFromArray = array instanceof Array
+    , arrayLength = pickFromArray ? array.length : null
+    , i;
+
+//  console.log('%s %s %s', str, pickFromArray, arrayLength);
+
+  // find all ranges
+  while (rangeRegExp.exec(str)) {
+    rangeStart = parseInt(RegExp.$1, 10);
+    rangeEnd = parseInt(RegExp.$2, 10);
+  //    console.log('%s - %s', rangeStart, rangeEnd);
+
+    if (!isNaN(rangeStart) && rangeEnd && rangeEnd > rangeStart) {
+      for (i = rangeStart; i < rangeEnd + 1; i++) {
+        selection.push(i);
+      }
+
+    }
+  }
+
+//  find open range
+
+//  console.log(str.match(openRangeRegExp));
+//  console.log(openRangeRegExp.exec(str));
+
+  if (pickFromArray && openRangeRegExp.exec(str)) {
+    rangeStart = parseInt(RegExp.$1, 10);
+    if (!isNaN(rangeStart) && rangeStart < arrayLength + 1) {
+      for (i = rangeStart; i < arrayLength + 1; i++) {
+        selection.push(i);
+      }
+    }
+  }
+
+  // find single items
+  while (singleItemRegExp.exec(str)) {
+    singleItem = parseInt(RegExp.$1, 10);
+    if (!isNaN(singleItem) && !_.contains(selection, singleItem)) selection.push(singleItem);
+  }
+
+  return pickFromArray ?
+    _.filter(array, function(val, index) {
+      return _.contains(selection, index + 1); }) :
+    _.sortBy(selection, function(num) { return num; });
+}
+
+exports.parseSelectionString = function(str) {
+  return parse(str);
+};
+
+exports.selectFromArray = function(array, str) {
+  return parse(str, array);
+};
