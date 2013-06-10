@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jasmine-node"
   },
-  "repository": "",
+  "repository": "https://github.com/Espesen/range-selection-parser",
   "keywords": [
     "range",
     "user input",
