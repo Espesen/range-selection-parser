@@ -12,26 +12,19 @@ function parse(str, array) {
     , arrayLength = pickFromArray ? array.length : null
     , i;
 
-//  console.log('%s %s %s', str, pickFromArray, arrayLength);
-
   // find all ranges
   while (rangeRegExp.exec(str)) {
     rangeStart = parseInt(RegExp.$1, 10);
     rangeEnd = parseInt(RegExp.$2, 10);
-  //    console.log('%s - %s', rangeStart, rangeEnd);
 
     if (!isNaN(rangeStart) && rangeEnd && rangeEnd > rangeStart) {
       for (i = rangeStart; i < rangeEnd + 1; i++) {
         selection.push(i);
       }
-
     }
   }
 
 //  find open range
-
-//  console.log(str.match(openRangeRegExp));
-//  console.log(openRangeRegExp.exec(str));
 
   if (pickFromArray && openRangeRegExp.exec(str)) {
     rangeStart = parseInt(RegExp.$1, 10);
@@ -53,6 +46,7 @@ function parse(str, array) {
       return _.contains(selection, index + 1); }) :
     _.sortBy(selection, function(num) { return num; });
 }
+
 
 exports.parseSelectionString = function(str) {
   return parse(str);
