@@ -2,8 +2,7 @@ var parser = require('../range-selection-parser')
   , _ = require('underscore');
 
 describe('Method parseSelectionString', function () {
-  describe('should parse selection string', function () {
-    it('and if called with only one argument, return array of numbers', function() {
+  it('should parse selection string', function () {
       var tests = [
         { result: [4, 5, 6],
           strings: [
@@ -50,56 +49,56 @@ describe('Method parseSelectionString', function () {
       expect(parser.parseSelectionString(' 0 ,  5- 9 13')).toEqual([0, 5, 6, 7, 8, 9, 13]);
 
 
-    });
-    it('and if called with an array as second arguments, return array of selected items', function () {
-      var sampleArray = ['foo', 'bar', 'baz', 'bay', 'bax', 'baq']
-        , tests = [
-            { result: ['foo', 'bay', 'bax', 'baq'],
-              strings: [
-                '1,4-',
-                '  1  4 -',
-                ' 1,foo4-']
-            },
-            { result: ['bay', 'bax', 'baq'],
-              strings: [
-                '4     -   6',
-                'foo4-6',
-                '4 -6-'
-              ]
-            },
-            { result: [],
-              strings: [
-                'foo',
-                'bar'
-              ]
-            },
-            { result: ['foo', 'bar', 'baz', 'bay', 'bax'],
-              strings: [
-                '0- 5',
-                '0-5'
-              ]
-            },
-            { result: ['foo', 'baz', 'bay', 'bax'],
-              strings: [
-                '1, 3-5',
-                '1 ,  3  -5',
-                'foo1,3-5'
-              ]
-            }
-          ];
+    })
+});
 
-      _.each(tests, function(test) {
-        _.each(test.strings, function(str) {
-          expect(parser.selectFromArray(sampleArray, str)).toEqual(test.result);
-        });
+describe('Method selectFromArray', function () {
+  it('should parse selection string and select corresponding items from array', function() {
+    var sampleArray = ['foo', 'bar', 'baz', 'bay', 'bax', 'baq']
+      , tests = [
+        { result: ['foo', 'bay', 'bax', 'baq'],
+          strings: [
+            '1,4-',
+            '  1  4 -',
+            ' 1,foo4-']
+        },
+        { result: ['bay', 'bax', 'baq'],
+          strings: [
+            '4     -   6',
+            'foo4-6',
+            '4 -6-'
+          ]
+        },
+        { result: [],
+          strings: [
+            'foo',
+            'bar'
+          ]
+        },
+        { result: ['foo', 'bar', 'baz', 'bay', 'bax'],
+          strings: [
+            '0- 5',
+            '0-5'
+          ]
+        },
+        { result: ['foo', 'baz', 'bay', 'bax'],
+          strings: [
+            '1, 3-5',
+            '1 ,  3  -5',
+            'foo1,3-5'
+          ]
+        }
+      ];
+
+    _.each(tests, function(test) {
+      _.each(test.strings, function(str) {
+        expect(parser.selectFromArray(sampleArray, str)).toEqual(test.result);
       });
-
-      expect(parser.selectFromArray(['a', 'b', 'c', 'd', 'e'], '1-3, 5'))
-        .toEqual(['a', 'b', 'c', 'e']);
-      expect(parser.selectFromArray(['aa', 'bb', 'cc', 'dd'], '2-'))
-        .toEqual(['bb', 'cc', 'dd']);
-
     });
 
+    expect(parser.selectFromArray(['a', 'b', 'c', 'd', 'e'], '1-3, 5'))
+      .toEqual(['a', 'b', 'c', 'e']);
+    expect(parser.selectFromArray(['aa', 'bb', 'cc', 'dd'], '2-'))
+      .toEqual(['bb', 'cc', 'dd']);
   });
 });
